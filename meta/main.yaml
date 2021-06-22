@@ -1,3 +1,5 @@
 dependencies:
   - role: docker
+  - role: dehydrated
+    when: keycloak.use_dehydrated
   - role: nginx

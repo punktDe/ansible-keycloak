@@ -2,6 +2,7 @@ keycloak:
   prefix:
     opt: /var/opt/keycloak
   #domain:
+  use_dehydrated: yes
   container_name: keycloak
   image: quay.io/keycloak/keycloak:11.0.3
   volumes:
