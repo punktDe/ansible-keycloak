@@ -1,0 +1,23 @@
+- name: Create directories for Keycloak
+  loop:
+    - "{{ keycloak.prefix.opt }}"
+  file:
+    path: "{{ item }}"
+    state: directory
+
+- name: Template extra files for Keycloak
+  loop:
+    - src: keycloak/TCPPING.cli
+      dest: "{{ keycloak.prefix.opt }}/TCPPING.cli"
+    - src: keycloak/standalone-ha.xml
+      dest: "{{ keycloak.prefix.opt }}/standalone-ha.xml"
+    - src: keycloak/entrypoint
+      dest: "{{ keycloak.prefix.opt }}/entrypoint"
+      mode: a+x
+  loop_control:
+    label: "{{ item.dest }}"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode|default(omit, true) }}"
+  notify: Restart Keycloak

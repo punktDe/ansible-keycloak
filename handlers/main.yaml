@@ -1,0 +1,6 @@
+- name: Restart Keycloak
+  throttle: 1
+  shell: |
+    set -e
+    systemctl restart keycloak
+    while true; do curl -s -o /dev/null -f 127.0.0.1:8080/auth/realms/master && break || sleep 1; done

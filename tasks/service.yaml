@@ -1,0 +1,14 @@
+- name: Install systemd service for Keycloak
+  loop:
+    - /etc/systemd/system/keycloak.service
+  template:
+    src: systemd/keycloak.service
+    dest: "{{ item }}"
+  notify: Restart Keycloak
+
+- name: Enable Keycloak
+  systemd:
+    daemon_reload: yes
+    name: keycloak
+    enabled: yes
+  notify: Restart Keycloak

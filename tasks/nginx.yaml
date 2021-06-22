@@ -1,0 +1,7 @@
+- name: Template nginx config for Keycloak
+  loop:
+    - "{{ nginx.prefix.config }}/http.d/keycloak.conf"
+  template:
+    src: nginx/http.d/keycloak.conf
+    dest: "{{ item }}"
+  notify: Reload nginx

@@ -1,0 +1,20 @@
+keycloak:
+  prefix:
+    opt: /var/opt/keycloak
+  #domain:
+  container_name: keycloak
+  image: quay.io/keycloak/keycloak:11.0.3
+  volumes:
+    "/opt/jboss/tools/cli/jgroups/discovery/TCPPING.cli": { host_dir: "{{ vars.keycloak.prefix.opt|quote }}/TCPPING.cli", relabel: unshared, read_only: yes }
+    "/mnt/standalone-ha.xml": { host_dir: "/var/opt/keycloak/standalone-ha.xml", relabel: unshared, read_only: yes }
+    "/mnt/entrypoint": { host_dir: "/var/opt/keycloak/entrypoint", relabel: unshared, read_only: yes }
+  ports:
+    #0.0.0.0:7600: 7600
+    127.0.0.1:8080: 8080
+  environment:
+    PROXY_ADDRESS_FORWARDING: "true"
+    KEYCLOAK_FRONTEND_URL: "https://{{ vars.keycloak.domain }}/auth"
+  entrypoint: /mnt/entrypoint
+  command:
+    bind_address_private: -Djboss.bind.address.private=0.0.0.0
+    bind_address: -Djboss.bind.address=0.0.0.0
