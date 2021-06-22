@@ -15,6 +15,9 @@ keycloak:
   environment:
     PROXY_ADDRESS_FORWARDING: "true"
     KEYCLOAK_FRONTEND_URL: "https://{{ vars.keycloak.domain }}/auth"
+    JGROUPS_DISCOVERY_EXTERNAL_IP: 127.0.0.1
+    JGROUPS_DISCOVERY_PROTOCOL: TCPPING
+    JGROUPS_DISCOVERY_PROPERTIES: 'initial_hosts="127.0.0.1[7600]"'
   entrypoint: /mnt/entrypoint
   command:
     bind_address_private: -Djboss.bind.address.private=0.0.0.0
