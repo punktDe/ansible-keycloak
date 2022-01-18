@@ -5,6 +5,7 @@ keycloak:
   use_dehydrated: yes
   container_name: keycloak
   image: quay.io/keycloak/keycloak:16.1.0
+  container_stop_timeout: 25
   volumes:
     "/opt/jboss/tools/cli/jgroups/discovery/TCPPING.cli": { host_dir: "{{ vars.keycloak.prefix.opt|quote }}/TCPPING.cli", relabel: unshared, read_only: yes }
     "/mnt/standalone-ha.xml": { host_dir: "/var/opt/keycloak/standalone-ha.xml", relabel: unshared, read_only: yes }
