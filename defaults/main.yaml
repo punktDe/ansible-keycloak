@@ -32,4 +32,4 @@ keycloak:
     KC_HOSTNAME_ADMIN_URL: "https://{{ vars.keycloak.domain }}"
     KC_PROXY: "edge"
     KEYCLOAK_BASE_URL: "https://{{ vars.keycloak.domain }}"
-  entrypoint: /mnt/entrypoint
+  entrypoint: /mnt/entrypoint.sh
