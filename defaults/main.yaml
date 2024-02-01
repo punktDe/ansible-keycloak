@@ -13,9 +13,6 @@ keycloak:
     "/opt/keycloak/providers": { host_dir: "{{ vars.keycloak.prefix.opt | quote }}/providers" }
     "/mnt/export": { host_dir: "{{ vars.keycloak.prefix.opt | quote }}/export" }
     "/mnt/entrypoint.sh": { host_dir: "{{ vars.keycloak.prefix.opt | quote }}/entrypoint.sh", relabel: unshared, read_only: true }
-  ports:
-    #0.0.0.0:7600: 7600
-    127.0.0.1:8080: 8080
   environment:
     PROXY_ADDRESS_FORWARDING: "true"
     KC_CACHE: ispn
@@ -28,8 +25,9 @@ keycloak:
     KC_DB_PASSWORD:
     KEYCLOAK_ADMIN: admin
     KEYCLOAK_ADMIN_PASSWORD:
-    KC_HOSTNAME: "{{ vars.keycloak.domain }}"
-    KC_HOSTNAME_ADMIN_URL: "https://{{ vars.keycloak.domain }}"
+    KC_HOSTNAME_URL: "https://{{ vars.keycloak.domain }}/auth"
+    KC_HOSTNAME_ADMIN_URL: "https://{{ vars.keycloak.domain }}/auth"
     KC_PROXY: "edge"
     KEYCLOAK_BASE_URL: "https://{{ vars.keycloak.domain }}"
+    KC_HTTP_RELATIVE_PATH: /auth
   entrypoint: /mnt/entrypoint.sh
