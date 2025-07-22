@@ -1,18 +1,25 @@
-- name: Create directories for Keycloak
+---
+- name: Create web directories for Keycloak
   loop:
     - "{{ keycloak.prefix.opt }}"
-  file:
+    - "{{ keycloak.prefix.opt }}/conf"
+    - "{{ keycloak.prefix.opt }}/themes"
+    - "{{ keycloak.prefix.opt }}/providers"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+
+- name: Create export directory for Keycloak
+  loop:
+    - "{{ keycloak.prefix.opt }}/export"
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
 
 - name: Template extra files for Keycloak
   loop:
-    - src: keycloak/TCPPING.cli
-      dest: "{{ keycloak.prefix.opt }}/TCPPING.cli"
-    - src: keycloak/standalone-ha.xml
-      dest: "{{ keycloak.prefix.opt }}/standalone-ha.xml"
-    - src: keycloak/entrypoint
-      dest: "{{ keycloak.prefix.opt }}/entrypoint"
+    - src: keycloak/entrypoint.sh
+      dest: "{{ keycloak.prefix.opt }}/entrypoint.sh"
       mode: a+x
   loop_control:
     label: "{{ item.dest }}"
